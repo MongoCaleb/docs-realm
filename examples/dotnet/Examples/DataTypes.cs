@@ -182,4 +182,9 @@ namespace Examples
             public IList<Plant> Plants { get; }
         }
     }
+
+    public class uuidtest
+    {
+        private Guid foo { get; set; }
+    }
 }

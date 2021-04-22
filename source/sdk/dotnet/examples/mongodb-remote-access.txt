@@ -53,9 +53,12 @@ class for this purpose:
 
 .. note::
  
-   For more information on using mapping classes, see 
-   `Mapping Classes <https://mongodb.github.io/mongo-csharp-driver/2.11/reference/bson/mapping/>`_
-   in the MongoDB .NET Driver documentation.
+   If you choose to provide a custom constructor for your class, you must also 
+   declare a public constructor that takes no arguments.
+
+For more information on using mapping classes, see 
+`Mapping Classes <https://mongodb.github.io/mongo-csharp-driver/2.11/reference/bson/mapping/>`_
+in the MongoDB .NET Driver documentation.
 
 .. _dotnet-mongodb-create-documents:
 

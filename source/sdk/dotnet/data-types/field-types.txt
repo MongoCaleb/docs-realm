@@ -27,17 +27,22 @@ Field Types - .NET SDK
 - ``string``
 - ``byte[]``
 - ``DateTimeOffset``
-- ``Decimal128`` from ``MongoDB.Bson``
+- ``Guid``
 - ``ObjectId`` from ``MongoDB.Bson``
+- ``Decimal128`` from ``MongoDB.Bson``
 - ``RealmInteger<T>`` (see below)
 - A ``RealmObject`` subclass 
 - An ``EmbeddedObject`` subclass (see :ref:`Embedded Objects <dotnet-property-embedded>`)
 - ``IList<T>`` where T is any of the supported data types (see :ref:`Lists <dotnet-property-lists>`)
 
-The ``byte``, ``char``, ``short``, ``int``, and ``long`` types  are all stored as 64 bit integer values
-within {+client-database+}. 
+The ``byte``, ``char``, ``short``, ``int``, and ``long`` types  are all stored 
+as 64 bit integer values within {+client-database+}.
 
-If you choose to provide custom constructors, you must declare a public constructor with no arguments.
+Object IDs 
+----------
+``MongoDB.Bson.ObjectId`` is a MongoDB-specific 12-bit unique value, while ``Guid`` 
+is a 16-bit globally-unique value. Both types are :ref:`indexable <dotnet-index-property>` 
+and can be used as :ref:`primary keys <dotnet-primary-key>`.
 
 .. _realminteger:
 
