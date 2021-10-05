@@ -27,6 +27,7 @@ additional features like
 Every {+service-short+} object has an *object type* that refers to the object's
 class. Objects of the same type share an :ref:`object schema
 <dotnet-object-schema>` that defines the properties and relationships of those
+<<<<<<< HEAD
 objects. 
 
 In C#, you typically define object schemas by using the native class 
@@ -34,6 +35,18 @@ implementation: when {+service-short+} is initialized, it discovers the
 {+service-short+} objects defined in all assemblies that have been loaded and 
 generates schemas accordingly. This is the simplest approach to defining a 
 schema, and is generally the least error-prone. However, you can also 
+=======
+objects.
+
+In C#, you typically define object schemas by using the C# class declarations. 
+When {+service-short+} is initialized, it discovers the 
+{+service-short+} objects defined in all assemblies that have been loaded and 
+generates schemas accordingly. This is the simplest approach to defining a 
+schema, and is generally the least error-prone. However, this approach includes 
+all loaded {+service-short+} objects, and there may be cases where you only want 
+to use :ref:`a subset of classes <dotnet-omit-classes-from-schema>`, or to 
+customize {+service-short+} object schemas. To do this, you can  
+>>>>>>> 599a3f0f (Update to reflect ObjectClass is now Schema property (#1383))
 :ref:`programmatically define a schema <dotnet-manual-schema>`.
 
 .. note:: 

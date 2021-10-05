@@ -34,7 +34,12 @@ namespace Examples
                 Credentials.EmailPassword("foo@foo.com", "foobar"));
             config = new SyncConfiguration("myPart", user);
             //:hide-start:
+<<<<<<< HEAD
             config.Schema = new[] {
+=======
+            config.Schema = new[]
+            {
+>>>>>>> 599a3f0f (Update to reflect ObjectClass is now Schema property (#1383))
                 typeof(Task),
                 typeof(MyClass),
                 typeof(dotnet.User),
