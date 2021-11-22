@@ -8,13 +8,13 @@ using Realms.Sync.Testing;
 
 namespace Examples
 {
+    //requires Sync
     public class ClientResetExamples
     {
         App app;
         User user;
         SyncConfiguration config;
-        const string myRealmAppId = Config.appid;
-
+        const string myRealmAppId = _RealmAppConfigurationHelper.appid;
 
         [Test]
         public async Task resetsTheClient()
@@ -24,10 +24,8 @@ namespace Examples
             user = app.LogInAsync(Credentials.EmailPassword("foo@foo.com", "foobar")).Result;
 
             config = new SyncConfiguration("myPart", user);
-            //:hide-start:
-            config.Schema = new[] { typeof(dotnet.User) };
-            //:hide-end:
-            var realm = await Realm.GetInstanceAsync(config);
+            config.Schema = new[] { typeof(Models.User) };
+            var realm = Realm.GetInstance(config);
 
             // :code-block-start: handle
             Session.Error += (sender, err) =>

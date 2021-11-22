@@ -5,57 +5,54 @@ using MongoDB.Bson;
 using Realms;
 using System.Linq;
 using System.Collections.Generic;
+using Task = System.Threading.Tasks.Task;
 
 namespace Examples
 {
 
     public class QueryEngineExamples
     {
+        RealmConfiguration config;
+
         public QueryEngineExamples()
         {
         }
 
-        App app;
-        User user;
-        SyncConfiguration config;
-        const string myRealmAppId = Config.appid;
-
         [OneTimeSetUp]
-        public async System.Threading.Tasks.Task Setup()
+        public async Task Setup()
         {
-            app = App.Create(myRealmAppId);
-            user = app.LogInAsync(Credentials.EmailPassword("foo@foo.com", "foobar")).Result;
-            config = new SyncConfiguration("foo", user);
+            config = new RealmConfiguration("yetanotherrealm");
             //:hide-start:
             config.Schema = new[]
             {
-                //typeof(Task),
                 typeof(UserTask),
                 typeof(UserProject)
             };
             //:hide-end:
-            var realm = await Realm.GetInstanceAsync(config);
-            var synchronousRealm = await Realm.GetInstanceAsync(config);
-
-            var t = new UserTask() { Priority = 100, ProgressMinutes = 5, Assignee = "Jamie" };
-            var t2 = new UserTask() { Priority = 1, ProgressMinutes = 500, Assignee = "Elvis" };
-            var up = new UserProject() { Name = "A Big Project" };
-            up.Tasks.Add(t);
-            up.Tasks.Add(t2);
-            realm.Write(() =>
+            using (var realm = await Realm.GetInstanceAsync(config))
             {
-                realm.Add(t);
-                realm.Add(t2);
-                realm.Add(up);
-            });
+                var synchronousRealm = await Realm.GetInstanceAsync(config);
+
+                var t = new UserTask() { Priority = 100, ProgressMinutes = 5, Assignee = "Jamie" };
+                var t2 = new UserTask() { Priority = 1, ProgressMinutes = 500, Assignee = "Elvis" };
+                var up = new UserProject() { Name = "A Big Project" };
+                up.Tasks.Add(t);
+                up.Tasks.Add(t2);
+                realm.Write(() =>
+                {
+                    realm.Add(t);
+                    realm.Add(t2);
+                    realm.Add(up);
+                });
+            }
             return;
         }
 
 
         [Test]
-        public async System.Threading.Tasks.Task Comparisons()
+        public async Task Comparisons()
         {
-            var realm = await Realm.GetInstanceAsync(config);
+            var realm = Realm.GetInstance(config);
             var tasks = realm.All<UserTask>();
             // :code-block-start: comparisons
             var highPri = tasks.Where(t => t.Priority > 5);
@@ -135,14 +132,17 @@ namespace Examples
         }
 
         [OneTimeTearDown]
-        public void Teardown()
+        public async Task Teardown()
         {
             var realm = Realm.GetInstance(config);
-            realm.Write(() =>
+            if (!realm.IsClosed)
             {
-                realm.RemoveAll<UserTask>();
-                realm.RemoveAll<UserProject>();
-            });
+                realm.Write(() =>
+                {
+                    realm.RemoveAll<UserTask>();
+                    realm.RemoveAll<UserProject>();
+                });
+            }
         }
     }
 

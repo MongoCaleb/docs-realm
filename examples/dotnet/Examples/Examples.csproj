@@ -18,5 +18,9 @@
     <None Remove="Readme.md" />
     <None Remove="Realm" />
     <None Remove="Realm.Fody" />
+    <None Remove="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
 </Project>

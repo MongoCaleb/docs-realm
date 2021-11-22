@@ -15,7 +15,7 @@ namespace Examples
         [OneTimeSetUp]
         public void Init()
         {
-            var config = new InMemoryConfiguration("borkbork");
+            var config = new InMemoryConfiguration("in_memory");
             realm = Realm.GetInstance(config);
         }
 
@@ -140,7 +140,7 @@ namespace Examples
             var pricklyPear = inventory.PlantSet.AsRealmQueryable()
                 .Where(p => p.Name == "Prickly Pear");
             // Alternatively, apply a filter directly on the Plant Set 
-            var pricklyPearPlants= inventory.PlantSet
+            var pricklyPearPlants = inventory.PlantSet
                 .Filter("Name == 'Prickly Pear'");
 
             // Find all Inventory items that have at least one value in their

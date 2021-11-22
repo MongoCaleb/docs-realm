@@ -5,26 +5,26 @@ using MongoDB.Bson;
 using NUnit.Framework;
 using Realms;
 using Realms.Sync;
-using TaskStatus = dotnet.TaskStatus;
-using Task = dotnet.Task;
-using System.Collections.Generic;
-using ObjectExamples;
+using TaskStatus = Examples.Models.TaskStatus;
+using Task = Examples.Models.Task;
+using ThreadTask = System.Threading.Tasks.Task;
 using Realms.Exceptions;
-using System.Threading.Tasks;
+using Examples.Models;
 
 namespace Examples
 {
-    public class Examples
+    // requires Sync (duh)
+    public class SyncExamples
     {
         App app;
         App app3;
         ObjectId testTaskId;
-        User user;
+        Realms.Sync.User user;
         SyncConfiguration config;
-        const string myRealmAppId = Config.appid;
+        const string myRealmAppId = _RealmAppConfigurationHelper.appid;
 
         [OneTimeSetUp]
-        public async System.Threading.Tasks.Task Setup()
+        public async ThreadTask Setup()
         {
             // :code-block-start: initialize-realm
             app = App.Create(myRealmAppId);
@@ -38,8 +38,8 @@ namespace Examples
             {
                 typeof(Task),
                 typeof(MyClass),
-                typeof(dotnet.User),
-                typeof(CustomGetterSetter)
+                typeof(Models.User),
+                typeof(Models.CustomGetterSetter)
             };
 
             Realm realm = Realm.GetInstance(config);
@@ -92,58 +92,12 @@ namespace Examples
             return;
         }
 
-        [Test]
-        public void OpensLocalRealm()
-        {
-            var pathToDb = Directory.GetCurrentDirectory() + "/db";
-            if (!File.Exists(pathToDb))
-            {
-                Directory.CreateDirectory(pathToDb);
-            }
-            var tempConfig = new RealmConfiguration(pathToDb + "/my.realm")
-            {
-                IsReadOnly = false,
-            };
-            var realm = Realm.GetInstance(tempConfig);
-
-            // :code-block-start: dispose
-            realm.Dispose();
-            // :code-block-end:
-
-            // :code-block-start: local-realm
-            var config = new RealmConfiguration(pathToDb + "/my.realm")
-            {
-                IsReadOnly = true,
-            };
-            Realm localRealm;
-            try
-            {
-                localRealm = Realm.GetInstance(config);
-            }
-            catch (RealmFileAccessErrorException ex)
-            {
-                Console.WriteLine($@"Error creating or opening the
-                    realm file. {ex.Message}");
-            }
-            // :code-block-end:
-            localRealm = Realm.GetInstance(config);
-            Assert.IsNotNull(localRealm);
-            localRealm.Dispose();
-            try
-            {
-                Directory.Delete(pathToDb, true);
-            }
-            catch (Exception)
-            {
-
-            }
-        }
 
         [Test]
-        public async System.Threading.Tasks.Task OpenIfUserExists()
+        public async ThreadTask OpenIfUserExists()
         {
-            app3 = App.Create(myRealmAppId);
-            User user3;
+            //app3 = App.Create(myRealmAppId);
+            Realms.Sync.User user3;
             SyncConfiguration config3;
             Realm realm3;
             // :code-block-start: check-if-offline
@@ -154,7 +108,7 @@ namespace Examples
             //   "config3" : "config",
             //   "realm3": "realm" }
             // }
-            if (app3.CurrentUser == null)
+            if (app.CurrentUser == null)
             {
                 // App must be online for user to authenticate
                 user3 = await app.LogInAsync(
@@ -174,7 +128,7 @@ namespace Examples
         }
 
         [Test]
-        public async System.Threading.Tasks.Task GetsSyncedTasks()
+        public async ThreadTask GetsSyncedTasks()
         {
             // :code-block-start: anon-login
             var user = await app.LogInAsync(Credentials.Anonymous());
@@ -185,8 +139,8 @@ namespace Examples
             config.Schema = new[]
             {
                 typeof(Task),
-                typeof(dotnet.User),
-                typeof(CustomGetterSetter)
+                typeof(Examples.Models.User),
+                typeof(Examples.Models.CustomGetterSetter)
             };
             //:hide-end:
             var realm = await Realm.GetInstanceAsync(config);
@@ -203,7 +157,7 @@ namespace Examples
         }
 
         [Test]
-        public async System.Threading.Tasks.Task ScopesARealm()
+        public async ThreadTask ScopesARealm()
         {
             // :code-block-start: scope
             config = new SyncConfiguration("myPart", user);
@@ -211,8 +165,8 @@ namespace Examples
             config.Schema = new[]
             {
                 typeof(Task),
-                typeof(dotnet.User),
-                typeof(CustomGetterSetter)
+                typeof(Examples.Models.User),
+                typeof(Examples.Models.CustomGetterSetter)
             };
             //:hide-end:
             using (var realm = Realm.GetInstance(config))
@@ -223,14 +177,14 @@ namespace Examples
         }
 
         [Test]
-        public async System.Threading.Tasks.Task ModifiesATask()
+        public async ThreadTask ModifiesATask()
         {
             config = new SyncConfiguration("myPart", user);
             //:hide-start:
             config.Schema = new[]
             {
                 typeof(Task),
-                typeof(dotnet.User)
+                typeof(Examples.Models.User)
             };
             //:hide-end:
             var realm = await Realm.GetInstanceAsync(config);
@@ -252,7 +206,7 @@ namespace Examples
         }
 
         [Test]
-        public async System.Threading.Tasks.Task LogsOnManyWays()
+        public async ThreadTask LogsOnManyWays()
         {
             {
                 // :code-block-start: logon_anon
@@ -346,7 +300,7 @@ namespace Examples
         }
 
         [Test]
-        public async System.Threading.Tasks.Task CallsAFunction()
+        public async ThreadTask CallsAFunction()
         {
             try
             {
@@ -375,7 +329,7 @@ namespace Examples
         }
 
         //[Test]
-        public async System.Threading.Tasks.Task LinksAUser()
+        public async ThreadTask LinksAUser()
         {
             {
                 // :code-block-start: link
@@ -406,7 +360,7 @@ namespace Examples
         }
 
         [Test]
-        public async System.Threading.Tasks.Task TestsCustomSetter()
+        public async ThreadTask TestsCustomSetter()
         {
             var foo = new CustomGetterSetter()
             {
@@ -428,7 +382,7 @@ namespace Examples
         }
 
         [OneTimeTearDown]
-        public async System.Threading.Tasks.Task TearDown()
+        public async ThreadTask TearDown()
         {
             using (var realm = Realm.GetInstance(config))
             {
@@ -472,46 +426,4 @@ namespace Examples
             this.Id = ObjectId.GenerateNewId();
         }
     }
-
-    // :code-block-start: dog_class
-    // :replace-start: {
-    //  "terms": {
-    //   "Dog1000": "Dog",
-    //   "Person1000" : "Person" }
-    // }
-    public class Dog1000 : RealmObject
-    {
-        [PrimaryKey]
-        [MapTo("_id")]
-        public ObjectId Id { get; set; }
-
-        [Required]
-        public string Name { get; set; }
-
-        public int Age { get; set; }
-        public string Breed { get; set; }
-        public IList<Person1000> Owners { get; }
-    }
-
-
-    public class Person1000 : RealmObject
-    {
-        [PrimaryKey]
-        [MapTo("_id")]
-        public ObjectId Id { get; set; }
-
-        [Required]
-        public string Name { get; set; }
-        //etc...
-
-        /* To add items to the IList<T>:
-
-        var dog = new Dog();
-        var caleb = new Person { Name = "Caleb" };
-        dog.Owners.Add(caleb);
-
-        */
-    }
-    // :replace-end:
-    // :code-block-end:
 }

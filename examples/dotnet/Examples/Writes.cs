@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Examples.Models;
 using MongoDB.Bson;
 using NUnit.Framework;
 using Realms;
@@ -10,27 +11,15 @@ namespace Examples
 {
     public class Writes
     {
-
         Realm realm;
         public Writes()
         {
             realm = Realm.GetInstance();
         }
 
-        [OneTimeTearDown]
-        public void TearDown()
-        {
-            realm.Write(() =>
-            {
-                realm.RemoveAll<WriteDog>();
-                realm.RemoveAll<WritePerson>();
-            });
-        }
-
         [Test]
-        public void Foo()
+        public void WriteLotsOfThings()
         {
-            //TearDown();
             // :code-block-start: transaction
             // :replace-start: {
             //  "terms": {
@@ -240,31 +229,15 @@ namespace Examples
 
             // :code-block-end:
         }
-    }
 
-    public class WriteDog : RealmObject
-    {
-        [PrimaryKey]
-        [MapTo("_id")]
-        public int Id { get; set; }
-
-        [Required]
-        public string Name { get; set; }
-
-        public int Age { get; set; }
-        public string Breed { get; set; }
-        public WritePerson Owner { get; set; }
-    }
-
-    public class WritePerson : RealmObject
-    {
-        [PrimaryKey]
-        [MapTo("_id")]
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        [Backlink("Owner")]
-        public IQueryable<WriteDog> Dogs { get; }
+        [OneTimeTearDown]
+        public void TearDown()
+        {
+            realm.Write(() =>
+            {
+                realm.RemoveAll<WriteDog>();
+                realm.RemoveAll<WritePerson>();
+            });
+        }
     }
 }

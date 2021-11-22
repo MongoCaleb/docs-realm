@@ -1,21 +1,16 @@
-﻿using Realms;
+﻿using MongoDB.Bson;
+using Realms;
 
-namespace dotnet
+namespace Examples.Models
 {
-    public class User : RealmObject
+    public class Project : RealmObject
     {
         [PrimaryKey]
         [MapTo("_id")]
-        [Required]
-        public string _id { get; set; }
-
+        public ObjectId _id { get; set; }
         [MapTo("_partition")]
         [Required]
         public string Partition { get; set; }
-
-        [MapTo("image")]
-        public string Image { get; set; }
-
         [MapTo("name")]
         [Required]
         public string Name { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Examples.Models;
 using MongoDB.Bson;
 using Realms;
 
@@ -56,73 +57,5 @@ namespace Examples
             // :code-block-end:
         }
 
-        // :code-block-start: ro1
-        //:replace-start: {
-        // "terms": {
-        //   "Person100": "Person"}
-        // }
-        public class Person100 : RealmObject
-        {
-            [PrimaryKey]
-            [MapTo("_id")]
-            public ObjectId Id { get; set; }
-
-            public string FirstName { get; set; }
-            public int Age { get; set; }
-        }
-        //:replace-end:
-        // :code-block-end:
-
-        // :code-block-start: ro2
-        //:replace-start: {
-        // "terms": {
-        //   "Person200": "Person"
-        // }}
-        public class Person200 : RealmObject
-        {
-            [PrimaryKey]
-            [MapTo("_id")]
-            public ObjectId Id { get; set; }
-
-            public string FirstName { get; set; }
-            public string LastName { get; set; }
-            public int Age { get; set; }
-        }
-        // :replace-end:
-        // :code-block-end:
-
-        // :code-block-start: ro3
-        //:replace-start: {
-        // "terms": {
-        //   "Person300": "Person"
-        // }}
-        public class Person300 : RealmObject
-        {
-            [PrimaryKey]
-            [MapTo("_id")]
-            public ObjectId Id { get; set; }
-
-            public string FullName { get; set; }
-            public int Age { get; set; }
-        }
-        // :replace-end:
-        // :code-block-end:
-
-        // :code-block-start: ro4
-        //:replace-start: {
-        // "terms": {
-        //   "Person400": "Person"
-        // }}
-        public class Person400 : RealmObject
-        {
-            [PrimaryKey]
-            [MapTo("_id")]
-            public ObjectId Id { get; set; }
-
-            public string FullName { get; set; }
-            public DateTimeOffset Birthday { get; set; }
-        }
-        // :replace-end:
-        // :code-block-end:
     }
 }

@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Task = System.Threading.Tasks.Task;
+using User = Realms.Sync.User;
 using Examples;
+using Examples.Models;
 using MongoDB.Bson;
 using NUnit.Framework;
 using Realms;
 using Realms.Sync;
 
-
 namespace Examples
 {
+    //requires Sync
     public class AggregationExamples
     {
         App app;
         User user;
         SyncConfiguration config;
-        const string myRealmAppId = Config.appid;
+        const string myRealmAppId = _RealmAppConfigurationHelper.appid;
 
         MongoClient mongoClient;
         MongoClient.Database dbPlantInventory;
@@ -266,4 +268,5 @@ namespace Examples
             return;
         }
     }
+
 }

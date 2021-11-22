@@ -6,12 +6,13 @@ using Realms.Sync;
 
 namespace Examples
 {
+    //requires Sync
     public class ProgressNotifications
     {
         App app;
-        Realms.Sync.User user;
+        User user;
         SyncConfiguration config;
-        string myRealmAppId = Config.appid;
+        string myRealmAppId = _RealmAppConfigurationHelper.appid;
         public class ProgressObj : RealmObject
         {
             [PrimaryKey]
@@ -19,6 +20,7 @@ namespace Examples
             public int Id { get; set; }
             public string Name { get; set; }
         }
+
         [Test]
         public async Task TestWaitForChangesToDownloadAsync()
         {
@@ -47,7 +49,7 @@ namespace Examples
             }
         }
         [Test]
-        public async Task TestUploadDownloadProgressNotification()
+        public void TestUploadDownloadProgressNotification()
         {
             var progressNotificationTriggered = false;
             var appConfig = new AppConfiguration(myRealmAppId)

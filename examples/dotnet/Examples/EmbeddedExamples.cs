@@ -1,26 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using MongoDB.Bson;
+using Examples.Models;
 using NUnit.Framework;
 using Realms;
-using Realms.Sync;
+using Task = System.Threading.Tasks.Task;
 
 namespace Examples
 {
     public class EmbeddedExamples
     {
-        App app;
-        User user;
         RealmConfiguration config;
-        const string myRealmAppId = Config.appid;
 
         [OneTimeSetUp]
-        public void Setup()
+        public async Task Setup()
         {
-            app = App.Create(myRealmAppId);
-            user = app.LogInAsync(Credentials.EmailPassword("foo@foo.com", "foobar")).Result;
             config = new RealmConfiguration();// "myPart", user);
 
             // Synchronous here because setup and tear down don't support async
@@ -62,6 +55,7 @@ namespace Examples
 
             // Test that the first (and only) Contact document has an embedded Address with a Street of "123 Fake St."
             Assert.AreEqual(contacts.FirstOrDefault().Address.Street, "123 Fake St.");
+            return;
         }
 
         [Test]
@@ -183,55 +177,6 @@ namespace Examples
             return;
         }
 
-        // :code-block-start:embedded-classes
-        public class Address : EmbeddedObject
-        {
-            [MapTo("street")]
-            public string Street { get; set; }
 
-            [MapTo("city")]
-            public string City { get; set; }
-
-            [MapTo("country")]
-            public string Country { get; set; }
-
-            [MapTo("postalCode")]
-            public string PostalCode { get; set; }
-
-        }
-        public class Contact : RealmObject
-        {
-            [PrimaryKey]
-            [MapTo("_id")]
-            public ObjectId Id { get; set; } = ObjectId.GenerateNewId();
-
-            [MapTo("_partition")]
-            [Required]
-            public string Partition { get; set; }
-
-            [MapTo("name")]
-            public string Name { get; set; }
-
-            [MapTo("address")]
-            public Address Address { get; set; } // embed a single address 
-
-        }
-        public class Business : RealmObject
-        {
-            [PrimaryKey]
-            [MapTo("_id")]
-            public ObjectId Id { get; set; } = ObjectId.GenerateNewId();
-
-            [MapTo("_partition")]
-            [Required]
-            public string Partition { get; set; }
-
-            [MapTo("name")]
-            public string Name { get; set; }
-
-            [MapTo("addresses")]
-            public IList<Address> Addresses { get; }
-        }
-        //:code-block-end:
     }
 }

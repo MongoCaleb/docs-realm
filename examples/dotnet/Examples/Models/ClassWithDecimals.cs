@@ -1,20 +1,11 @@
-﻿using System;
-using System.Linq;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using Realms;
 using Realms.Sync;
 
-namespace Examples
+namespace Examples.Models
 {
-    public class DecimalFun
-    {
-        public DecimalFun()
-        {
-        }
-    }
-
     // :code-block-start: decimal128
-    public class MyClassWithDecimals
+    public class ClassWithDecimals
     {
         [PrimaryKey]
         public ObjectId _id { get; } = ObjectId.GenerateNewId();
@@ -33,12 +24,12 @@ namespace Examples
         public void DoDecimalStuff()
         {
             // :hide-start:
-            var app = App.Create(Config.appid);
+            var app = App.Create(_RealmAppConfigurationHelper.appid);
             var user = app.LogInAsync(Credentials.EmailPassword("foo@foo.com", "foobar")).Result;
             var config = new SyncConfiguration("myPart", user);
             var realm = Realm.GetInstanceAsync().Result;
             // :hide-end:
-            var myInstance = new MyClassWithDecimals();
+            var myInstance = new ClassWithDecimals();
             // To store decimal values:
             realm.Write(() =>
             {

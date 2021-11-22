@@ -9,16 +9,17 @@ using Realms.Logging;
 
 namespace Examples
 {
+    // requires Sync
     public class ErrorHandler
     {
         App app;
         User user;
         SyncConfiguration config;
         bool didTriggerErrorHandler;
-        string myRealmAppId = Config.appid;
+        string myRealmAppId = _RealmAppConfigurationHelper.appid;
 
         [Test]
-        public async Task handleErrors()
+        public async Task HandleErrors()
         {
             // :code-block-start: set-log-level
             var appConfig = new AppConfiguration(myRealmAppId)
@@ -31,6 +32,15 @@ namespace Examples
                 // :hide-end:
             };
             // :code-block-end:
+            app = App.Create(appConfig);
+            user = await app.LogInAsync(Credentials.Anonymous());
+            config = new SyncConfiguration("myPartition", user);
+            //:hide-start:
+            config.Schema = new[] { typeof(Models.User) };
+            //:hide-end:
+            var realm = Realm.GetInstance(config);
+
+
 
             // :code-block-start: customize-logging-function
             // :uncomment-start:
@@ -44,13 +54,6 @@ namespace Examples
             });
             // :code-block-end:
 
-            app = App.Create(appConfig);
-            user = await app.LogInAsync(Credentials.Anonymous());
-            config = new SyncConfiguration("myPartition", user);
-            //:hide-start:
-            config.Schema = new[] { typeof(dotnet.User) };
-            //:hide-end:
-            var realm = await Realm.GetInstanceAsync(config);
 
             // :code-block-start: handle-errors
             Session.Error += (session, errorArgs) =>

@@ -4,9 +4,15 @@ using System.Linq;
 using MongoDB.Bson;
 using NUnit.Framework;
 using Realms;
+using Task = System.Threading.Tasks.Task;
 
 namespace Examples
 {
+    // NOTE: leaving these objects separate because
+    // they are all about relationships and it makes
+    // more sense to leave them together in a single
+    // file rather than move the classes to the Models
+    // namespace
     public class OneToOneRelationship
     {
         // :code-block-start: one-to-one
@@ -38,7 +44,7 @@ namespace Examples
         // :code-block-end:
 
         [Test]
-        public async System.Threading.Tasks.Task OneToOneQuery()
+        public async Task OneToOneQuery()
         {
             var realm = await Realm.GetInstanceAsync();
             realm.Write(() =>
@@ -119,7 +125,7 @@ namespace Examples
         // :code-block-end:
 
         [Test]
-        public async System.Threading.Tasks.Task OneToManyQuery()
+        public async Task OneToManyQuery()
         {
             var realm = await Realm.GetInstanceAsync();
             realm.Write(() =>
@@ -193,9 +199,9 @@ namespace Examples
         // :code-block-end:
 
         [Test]
-        public async System.Threading.Tasks.Task InverseQuery()
+        public async Task InverseQuery()
         {
-            var realm = await Realm.GetInstanceAsync();
+            var realm = Realm.GetInstance();
             realm.Write(() =>
             {
                 realm.RemoveAll<TaskTwo>();

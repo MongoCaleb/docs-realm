@@ -1,21 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Examples;
+using Task = System.Threading.Tasks.Task;
+using User = Realms.Sync.User;
+
+using Examples.Models;
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
 using NUnit.Framework;
-using Realms;
 using Realms.Sync;
 
 namespace Examples
 {
+    //requires Sync
     public class CustomUserDataExamples
     {
         App app;
         User user;
-        const string myRealmAppId = Config.appid;
+        const string myRealmAppId = _RealmAppConfigurationHelper.appid;
         MongoClient mongoClient;
         MongoClient.Database dbTracker;
         MongoClient.Collection<CustomUserData> cudCollection;
@@ -88,24 +87,4 @@ namespace Examples
 
     }
 
-    // :code-block-start: cud
-    public class CustomUserData
-    {
-        public string _id { get; private set; }
-
-        public string _partition { get; private set; }
-
-        public string FavoriteColor { get; set; }
-
-        public string LocalTimeZone { get; set; }
-
-        public bool IsCool { get; set; }
-
-        public CustomUserData(string id, string partition = "myPart")
-        {
-            this._id = id;
-            this._partition = partition;
-        }
-    }
-    // :code-block-end:
 }

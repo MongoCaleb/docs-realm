@@ -10,7 +10,7 @@ namespace Examples
     public class WriteCopy
     {
         [Test]
-        public void TestWriteCopy()
+        public void WriteACopy()
         {
             // :code-block-start: copy_a_realm
             // open an existing realm

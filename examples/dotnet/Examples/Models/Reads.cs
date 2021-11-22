@@ -4,7 +4,7 @@ using System.Linq;
 using MongoDB.Bson;
 using Realms;
 
-namespace ReadExamples
+namespace ReadExamples.Models
 {
 
     public class ReadsTask : RealmObject

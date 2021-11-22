@@ -1,20 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Examples;
 using MongoDB.Bson;
 using NUnit.Framework;
-using Realms;
 using Realms.Sync;
 
 namespace Examples
 {
+    // requires Sync
     public class MongoDBExamples
     {
         App app;
         User user;
         SyncConfiguration config;
-        const string myRealmAppId = Config.appid;
+        const string myRealmAppId = _RealmAppConfigurationHelper.appid;
 
         MongoClient mongoClient;
         MongoClient.Database dbPlantInventory;

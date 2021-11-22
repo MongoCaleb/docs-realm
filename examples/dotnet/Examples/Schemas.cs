@@ -1,5 +1,4 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Realms;
 using Realms.Schema;
 
@@ -7,10 +6,6 @@ namespace Examples
 {
     public class Schemas
     {
-        public Schemas()
-        {
-        }
-
         [Test]
         public void TestSchemas()
         {
@@ -56,6 +51,7 @@ namespace Examples
             Assert.AreEqual(2, config.Schema.Count);
             Assert.AreEqual(1, manualConfig.Schema.Count);
             Assert.AreEqual(1, mixedConfig.Schema.Count);
+
             ObjectSchema foo;
             mixedConfig.Schema.TryFindObjectSchema("ClassA", out foo);
             if (foo != null)
@@ -66,6 +62,7 @@ namespace Examples
         }
     }
 
+    // No need to centralize these two classes
     class ClassA : RealmObject
     {
         [PrimaryKey]
