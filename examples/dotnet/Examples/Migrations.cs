@@ -18,11 +18,11 @@ namespace Examples
                 {
                     //:replace-start: {
                     // "terms": {
-                    //   "Person200": "Person",
-                    //   "Person400":"Person"}
+                    //   "PersonD": "Person",
+                    //   "PersonE":"Person"}
                     // }
-                    var oldPeople = migration.OldRealm.DynamicApi.All("Person200");
-                    var newPeople = migration.NewRealm.All<Person400>();
+                    var oldPeople = migration.OldRealm.DynamicApi.All("PersonD");
+                    var newPeople = migration.NewRealm.All<PersonE>();
                     // :replace-end:
 
                     // Migrate Person objects

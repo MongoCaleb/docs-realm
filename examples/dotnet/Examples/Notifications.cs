@@ -48,7 +48,7 @@ namespace Examples
             // :replace-start: {
             //  "terms": {
             //   "DogE": "Dog",
-            //   "Person1000" : "Person" }
+            //   "PersonA" : "Person" }
             // }
             // Observe collection notifications. Retain the token to keep observing.
             var token = realm.All<DogE>()
@@ -95,15 +95,15 @@ namespace Examples
 
             realm.Write(() =>
             {
-                realm.Add(new Person1000 { Id = ObjectId.GenerateNewId(), Name = "Elvis Presley" });
+                realm.Add(new PersonA { Id = ObjectId.GenerateNewId(), Name = "Elvis Presley" });
             });
             //:code-block-start:object-notifications
             // :replace-start: {
             //  "terms": {
             //   "DogE": "Dog",
-            //   "Person1000" : "Person" }
+            //   "PersonA" : "Person" }
             // }
-            var theKing = realm.All<Person1000>()
+            var theKing = realm.All<PersonA>()
                 .FirstOrDefault(p => p.Name == "Elvis Presley");
 
             theKing.PropertyChanged += (sender, eventArgs) =>

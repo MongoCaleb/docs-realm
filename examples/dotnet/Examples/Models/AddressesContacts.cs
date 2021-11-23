@@ -10,10 +10,6 @@ namespace Examples.Models
     // for the code snippet
 
     // :code-block-start:embedded-classes
-    // :replace-start: {
-    //  "terms": {
-    //      "Address": "Address"}
-    // }
     public class Address : EmbeddedObject
     {
         [MapTo("street")]
