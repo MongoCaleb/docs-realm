@@ -196,6 +196,8 @@ you must specify the configuration settings again.
 To re-enable {+sync+}, follow the steps in the :ref:`Enable Realm Sync
 <enable-sync>` guide. 
 
+.. _client-reset: 
+
 If you are re-enabling {+sync+} after you have terminated it, you must 
 perform a manual client reset in your client applications:
 

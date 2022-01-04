@@ -1,0 +1,84 @@
+.. _alter-sync:
+
+=============================
+Alter Your Sync Configuration
+=============================
+
+.. default-domain:: mongodb
+
+.. contents:: On this page
+   :local:
+   :backlinks: none
+   :depth: 2
+   :class: singlecol
+
+Overview
+--------
+Once you have configured your Sync configuration, you can make changes. Changes 
+to a Partition-Based Sync configuration require terminating and reenabling Sync, 
+while changes to a Flexible Sync configuration do not. 
+
+Change Your Partition-Based Sync Configuration
+----------------------------------------------
+You can change the field on which you partition your {+service-short+} data, but 
+doing so requires terminating and reenabling Sync.
+
+.. note:: Partition Key Strategies
+
+   For details on choosing a partition key, see :ref:`<sync-partitions>`.
+
+To change your partition key, follow these steps:
+
+1. :ref:`Terminate Sync <terminating-realm-sync>`.
+2. :ref:`Re-enable Sync <re-enable-realm-sync>`, specifying the new partition 
+   key to use. 
+
+.. note:: Client Resets
+
+   When you terminate and re-enable Sync, you must perform a 
+   :ref:`client reset <client-reset>` on all clients that use Sync. 
+
+
+Change Your Flexible Sync Configuration
+---------------------------------------
+Because a Flexible Sync Configuration is query-based, you can make changes by 
+adding and removing the queryable fields while Sync is running. 
+
+Add a Queryable Field
+~~~~~~~~~~~~~~~~~~~~~
+Adding a new queryable field does not impact existing queries. However, before a 
+client can query against the new field, it must wait for the entire sync history 
+to catch up to the point where the new field was added.
+
+.. note:: Maximum Queryable Fields Count
+
+   You can configure up to 10 queryable fields per application for Flexible Sync. 
+   If you have a large number of collections in a Realm app, you may need to use 
+   the same queryable field across multiple collections. Combine this with rules 
+   and permissions for more granular control over who can access which 
+   collections.
+
+
+.. TODO
+To add a new queryable field, 
+
+Remove a Queryable Field
+~~~~~~~~~~~~~~~~~~~~~~~~
+If you remove a queryable field that a client is using, the sync session on that 
+client is dropped and {+sync+} will send a client reset. Clients not using the 
+field will consider working as normal. 
+
+.. note::
+
+   You should update your client code to prevent the client reset message by 
+   removing the corresponding sync query on the client before making the 
+   server-side change. 
+
+.. TODO
+To remove an existing queryable field, 
+
+
+Implicit Permission Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. TODO
