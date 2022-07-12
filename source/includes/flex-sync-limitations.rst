@@ -1,30 +1,3 @@
-.. _realm-query-language:
-
-====================
-Realm Query Language
-====================
-
-.. default-domain:: mongodb
-
-.. contents:: On this page
-   :local:
-   :backlinks: none
-   :depth: 3
-   :class: singlecol
-
-.. include:: includes/note-unsupported-flex-sync-rql-operators.rst
-
-.. include:: /includes/rql.rst
-
-.. _rql-aggregate-operators:
-
-.. include:: /includes/rql-aggregation.rst
-
-.. _flexible-sync-rql-limitations:
-
-Flexible Sync RQL Limitations
------------------------------
-
 Flexible Sync has some limitations when using RQL operators. When you 
 write the :ref:`query subscription <flexible-sync-query-subscription>` 
 that determines which data to sync, the server does not support these
