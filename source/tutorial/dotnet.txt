@@ -200,8 +200,8 @@ Modify the Application
 
          .. code-block:: csharp
 
-         [MapTo("priority")]
-         public int? Priority { get; set; }
+            [MapTo("priority")]
+            public int? Priority { get; set; }
             
       #. Also add a PriorityLevel enum below the ``Item`` class:
          
@@ -288,12 +288,7 @@ Modify the Application
       Now switch back to the Atlas data page in your browser, and refresh the 
       ``Item`` collection. You should now see the new Item with the ``priority`` 
       field added and set to **1**. You will also notice that the existing Item 
-      now also has a ``priority`` field, and it is set to **null**, as shown in 
-      the following screenshot:
-
-      .. figure:: /images/dotnet-tutorial-two-new-items.png
-         :alt:  Two items in a collection
-         :figwidth: 300px
+      does not have a ``priority`` field.
 
       .. note:: Why Didn't This Break Sync?
       
@@ -380,11 +375,10 @@ Modify the Application
       out the Item because it doesn't meet the subscription rules.
 
       You'll note, too, that the document you initially created is not synced, 
-      because it has a priority of ``null``. If you want this Item to be synced, 
+      because it does not have a priority field. If you want this Item to be shown, 
       you can edit the document in the Atlas UI and add a value for the priority 
       field, or you can change your subscription to include documents with null 
       values:
-
 
       .. code-block:: csharp
          :emphasize-lines: 5
