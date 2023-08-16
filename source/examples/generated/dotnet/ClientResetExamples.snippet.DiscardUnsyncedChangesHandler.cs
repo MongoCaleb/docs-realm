@@ -19,5 +19,3 @@
             // Automatic reset failed; handle the reset manually here
         }
     };
-
-    var realm = await Realm.GetInstanceAsync(config);

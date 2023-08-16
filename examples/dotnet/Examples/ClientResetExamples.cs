@@ -55,6 +55,7 @@ namespace Examples
                     // Automatic reset failed; handle the reset manually here
                 }
             };
+            // :snippet-end:
             try
             {
                 var realm = await Realm.GetInstanceAsync(config);
@@ -64,7 +65,6 @@ namespace Examples
                 Console.WriteLine($@"Error creating or opening the
                     realm file. {ex.Message}");
             }
-            // :snippet-end:
             await user.LogOutAsync();
         }
 

@@ -92,16 +92,16 @@ namespace Examples
         [Test]
         public async Task TestOpenFSRealm()
         {
+            var app = App.Create(Config.FSAppId);
+            var user = await app.LogInAsync(Credentials.Anonymous(false));
+            Realm realm;
+
             // :snippet-start: open-fs-realm
             // :replace-start: {
             //  "terms": {
             //   "Config.FSAppId": "\"myRealmAppId\"",
             //   "Credentials.Anonymous(false)": "Credentials.Anonymous()"}
             // }
-            var app = App.Create(Config.FSAppId);
-            var user = await app.LogInAsync(Credentials.Anonymous(false));
-            Realm realm;
-
             var config = new FlexibleSyncConfiguration(user)
             {
                 PopulateInitialSubscriptions = (realm) =>
@@ -131,6 +131,7 @@ namespace Examples
         [Test]
         public async Task TestOpenFSRealmOffline()
         {
+            var app = App.Create(Config.FSAppId);
             // :snippet-start: open-fs-realm-offline
             // :replace-start: {
             //  "terms": {
@@ -138,20 +139,21 @@ namespace Examples
             //   "Credentials.Anonymous(false)": "Credentials.Anonymous()"
             //  }
             // }
-            var app = App.Create(Config.FSAppId);
+
             // :remove-start:
             // Another app.CurrentUser was carrying over into this test
             // causing issues with opening the FS realm. This resolves the
             // test failure but there should probably be stronger cleanup
             // between tests to negate the need for this.
-            if (app.CurrentUser != null) {
+            if (app.CurrentUser != null)
+            {
                 await app.RemoveUserAsync(app.CurrentUser);
                 await app.LogInAsync(Credentials.Anonymous(false));
             };
-            // :remove-end:
-            Realms.Sync.User user;
+            User user;
             FlexibleSyncConfiguration config;
             Realm realm;
+            // :remove-end:
 
             if (app.CurrentUser == null)
             {
@@ -165,7 +167,7 @@ namespace Examples
                 Assert.NotNull(session);
                 // :remove-end:
             }
-            else 
+            else
             {
                 // This works whether online or offline
                 // It requires a user to have been previously authenticated

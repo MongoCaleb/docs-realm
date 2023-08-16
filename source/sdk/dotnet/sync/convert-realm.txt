@@ -1,7 +1,7 @@
 .. _dotnet-convert-to-sync:
 
 ===============================================================
-Convert Between Non-Synced Realms and Synced Realms  - .NET SDK
+Convert Between Non-Synced Realms and Synced Realms - .NET SDK
 ===============================================================
 
 .. contents:: On this page
