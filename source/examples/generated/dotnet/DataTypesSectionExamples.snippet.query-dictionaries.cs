@@ -23,7 +23,7 @@ realm.Write(() =>
 // Find all Inventory items that have "Petunia"
 // as a key in their Plants dictionary.
 var petunias = realm.All<Inventory>()
-    .Filter("Plants.@keys == 'Petunia'");
+    .Filter("Plants.@keys == '$0'", "Petunia");
 
 // Find all Inventory items that have at least one value in their
 // IntDictionary that is larger than 5 using RQL

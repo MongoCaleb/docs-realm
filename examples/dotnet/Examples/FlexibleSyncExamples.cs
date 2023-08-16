@@ -27,18 +27,27 @@ namespace Examples
             // :snippet-start:update-subscriptions
             realm.Subscriptions.Update(() =>
             {
-                // subscribe to all long running items, and give the subscription the name 'longRunningItems'
+                // Subscribe to all long running items, and give the subscription
+                // the name 'longRunningItems'
                 var longRunningItemsQuery = realm.All<MyTask>()
                     .Where(i => i.Status == "completed" && i.ProgressMinutes > 120);
                 realm.Subscriptions
                     .Add(longRunningItemsQuery,
                         new SubscriptionOptions() { Name = "longRunningItems" });
 
-                // subscribe to all of Ben's Item objects
-                realm.Subscriptions.Add(realm.All<MyTask>().Where(i => i.Owner == "Ben"));
+                // Subscribe to all of Ben's Item objects
+                realm.Subscriptions.Add(realm.All<MyTask>()
+                    .Where(i => i.Owner == "Ben"));
 
-                // subscribe to all Teams, and give the subscription the name 'teamsSubscription' and throw an error if a new query is added to the team subscription
-                realm.Subscriptions.Add(realm.All<Team>(), new SubscriptionOptions() { Name = "teams", UpdateExisting = false });
+                // Subscribe to all Teams, and give the subscription the
+                // name 'teamsSubscription' and throw an error if a new
+                // query is added to the team subscription
+                realm.Subscriptions.Add(realm.All<Team>(),
+                    new SubscriptionOptions()
+                    {
+                        Name = "teams",
+                        UpdateExisting = false
+                    });
             });
             // :snippet-end:
             // :snippet-start: wait-for-synchronization
@@ -48,8 +57,9 @@ namespace Examples
             }
             catch (SubscriptionException ex)
             {
-                // do something in response to the exception or log it
-                Console.WriteLine($@"The subscription set's state is Error and synchronization is paused:  {ex.Message}");
+                // Do something in response to the exception or log it
+                Console.WriteLine($@"The subscription set's state is Error
+                and synchronization is paused:  {ex.Message}");
             }
             // :snippet-end:
             // :snippet-start:update-a-subscription
@@ -116,7 +126,8 @@ namespace Examples
                 PopulateInitialSubscriptions = (realm) =>
                 {
                     var allTasks = realm.All<MyTask>();
-                    realm.Subscriptions.Add(allTasks, new SubscriptionOptions { Name = "allTasks" });
+                    realm.Subscriptions.Add(allTasks,
+                        new SubscriptionOptions { Name = "allTasks" });
                 }
             };
             try
