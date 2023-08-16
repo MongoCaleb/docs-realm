@@ -1,5 +1,3 @@
-// Wait for the server to acknowledge the subscription change and return all objects
-// matching the query
 try
 {
     await realm.Subscriptions.WaitForSynchronizationAsync();

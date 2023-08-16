@@ -126,7 +126,7 @@ The steps for opening a synced realm while online are:
    
 The following code demonstrates these steps:
 
-.. literalinclude:: /examples/generated/dotnet-flexible-sync/FlexibleSyncExamples.snippet.open-fs-realm.cs
+.. literalinclude:: /examples/generated/dotnet/FlexibleSyncExamples.snippet.open-fs-realm.cs
    :language: csharp
 
 In the above example, the code shows how to open the realm *asynchronously* 
@@ -151,7 +151,7 @@ The following code shows how to check if there is an existing ``User`` object.
 If none is found, it uses the process outlined about to obtain a user. If the 
 device already has a ``user``, it opens the synced realm with that user:
 
-.. literalinclude:: /examples/generated/dotnet-flexible-sync/FlexibleSyncExamples.snippet.open-fs-realm-offline.cs
+.. literalinclude:: /examples/generated/dotnet/FlexibleSyncExamples.snippet.open-fs-realm-offline.cs
    :language: csharp
 
 Configuring Timeouts with AppConfiguration
