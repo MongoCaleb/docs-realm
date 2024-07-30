@@ -25,7 +25,15 @@ jobs:
         run: npm install
       - name: Test JavaScript
         working-directory: examples/node/legacy
-        run: npm run test:js
+        run: |
+          if npm run test:js 2>&1 | grep "fail"
+          then
+            exit 1
+          fi
       - name: Test TypeScript
         working-directory: examples/node/legacy
-        run: npm run test:ts
+        run: |
+          if npm run test:ts 2>&1 | grep "fail"
+          then
+            exit 1
+          fi
